@@ -80,10 +80,10 @@ try {
 	# Because this isn't a PowerShell command, we can't grab the output as neatly
 	# The next few lines should strip away all of the SFC output except for the end result
 	$SFCResultParsed = ($SFCResult -split '' | Where-Object {$_ -and [byte][char]$_ -ne 0}) -join '' 
-	$SFCResultParsed = $SFCResult1 -Replace "Verification \d+\% complete.",""
-	$SFCResultParsed = $SFCResult1 -Replace "Beginning system scan.",""
-	$SFCResultParsed = $SFCResult1 -Replace "This process will take some time.",""
-	$SFCResultParsed = $SFCResult1 -Replace "Beginning verification phase of system scan.",""
+	$SFCResultParsed = $SFCResultParsed -Replace "Verification \d+\% complete.",""
+	$SFCResultParsed = $SFCResultParsed -Replace "Beginning system scan.",""
+	$SFCResultParsed = $SFCResultParsed -Replace "This process will take some time.",""
+	$SFCResultParsed = $SFCResultParsed -Replace "Beginning verification phase of system scan.",""
 	Write-Output $SFCResultParsed
 } catch {
 	Write-Output "Failed to execute Phase 3."
