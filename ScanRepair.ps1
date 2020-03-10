@@ -79,7 +79,7 @@ try {
 	$SFCResult = sfc /scannow
 	# Because this isn't a PowerShell command, we can't grab the output as neatly
 	# The next few lines should strip away all of the SFC output except for the end result
-	$SFCResultParsed = ($SFCResult -split '' | ? {$_ -and [byte][char]$_ -ne 0}) -join '' 
+	$SFCResultParsed = ($SFCResult -split '' | Where-Object {$_ -and [byte][char]$_ -ne 0}) -join '' 
 	$SFCResultParsed = $SFCResult1 -Replace "Verification \d+\% complete.",""
 	$SFCResultParsed = $SFCResult1 -Replace "Beginning system scan.",""
 	$SFCResultParsed = $SFCResult1 -Replace "This process will take some time.",""
