@@ -5,6 +5,7 @@ if ($vers -lt 3) {
 	exit
 }
 
+
 ### Phase 1 ###
 
 Write-Output "Phase 1: Scan C: volume for errors..."
@@ -24,7 +25,6 @@ try {
 } catch {
 	Write-Output "Failed to execute Phase 1."
 }
-
 
 
 ### Phase 2 ###
@@ -69,4 +69,22 @@ try {
 	}
 } catch {
 	Write-Output "Failed to execute Phase 2."
+}
+
+
+### Phase 3 ###
+
+Write-Output "Phase 3: SFC scan"
+try {
+	$SFCResult = sfc /scannow
+	# Because this isn't a PowerShell command, we can't grab the output as neatly
+	# The next few lines should strip away all of the SFC output except for the end result
+	$SFCResultParsed = ($SFCResult -split '' | ? {$_ -and [byte][char]$_ -ne 0}) -join '' 
+	$SFCResultParsed = $SFCResult1 -Replace "Verification \d+\% complete.",""
+	$SFCResultParsed = $SFCResult1 -Replace "Beginning system scan.",""
+	$SFCResultParsed = $SFCResult1 -Replace "This process will take some time.",""
+	$SFCResultParsed = $SFCResult1 -Replace "Beginning verification phase of system scan.",""
+	Write-Output $SFCResultParsed
+} catch {
+	Write-Output "Failed to execute Phase 3."
 }
